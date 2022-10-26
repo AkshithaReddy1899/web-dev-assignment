@@ -1,6 +1,6 @@
 function App() {
   return (
-    <div className="App">
+    <div className="bg-red-900">
       React app
     </div>
   );
