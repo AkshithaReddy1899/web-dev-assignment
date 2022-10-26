@@ -1,7 +1,9 @@
+import Main from './components/Main';
+
 function App() {
   return (
     <div className="bg-red-900">
-      React app
+      <Main />
     </div>
   );
 }
