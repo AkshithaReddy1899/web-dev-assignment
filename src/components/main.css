@@ -1,0 +1,34 @@
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.card-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width:90vw;
+  height:80vh;
+}
+
+.image:nth-child(6n) {
+  height: 30%;
+}
+
+.image:nth-child(6n-1) {
+  height: 50%;
+}
+
+.image:nth-child(6n-2),.image:nth-child(6n-3) {
+  height: 40%;
+}
+
+.image:nth-child(6n-4) {
+  height: 60%;
+}
+
+.image:nth-child(6n-5) {
+  height: 20%;
+}
