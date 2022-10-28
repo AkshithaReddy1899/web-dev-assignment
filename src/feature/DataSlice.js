@@ -1,11 +1,48 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { v4 as uuidv4 } from 'uuid';
+
+
+const initiaImages = [
+  {
+    id: uuidv4(),
+    url: 'https://images.unsplash.com/photo-1662103185268-465a66a86aff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTZ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
+  },
+  {
+    id: uuidv4(),
+    url: 'https://images.unsplash.com/photo-1662068612273-cefedc1d48f1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTJ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
+  },
+  {
+    id: uuidv4(),
+    url: 'https://images.unsplash.com/photo-1662091383949-639fe718d586?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTB8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
+  },
+  {
+    id: uuidv4(),
+    url: 'https://images.unsplash.com/photo-1662358279914-9e9e4efb364f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8Mnx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=60',
+  },
+  {
+    id: uuidv4(),
+    url: 'https://images.unsplash.com/photo-1662104320233-ab2f03686036?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8NHx8fGVufDB8fHx8&auto=format&fit=crop&w=900&q=60',
+  },
+  {
+    id: uuidv4(),
+    url: 'https://images.unsplash.com/photo-1662067379109-d0f0ac679c58?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8M3x8fGVufDB8fHx8&auto=format&fit=crop&w=900&q=60',
+  }
+]
 
 export const fetchImages = createAsyncThunk('GET_IMAGES', async () => {
-  let response = await fetch("https://picsum.photos/v2/list?limit=100", { 
-    method: "GET",
-  });
-  
-  let data = await response.json();
+  // let response = await fetch(`https://api.unsplash.com/photos?client_id=${process.env.ACCESS_KEY}`);
+
+  let headersList = {
+    "Content-Type": "application/json"
+   }
+   
+   let response = await fetch(`https://api.unsplash.com/photos?client_id=${process.env.REACT_APP_ACCESS_KEY}`, { 
+     method: "GET",
+     headers: headersList
+   });
+   
+   let data = await response.json();
+   console.log(data);
   return data;
 })
 
@@ -13,7 +50,7 @@ export const dataSlice = createSlice({
   name: 'images',
   initialState: {
 		images: [],
-    displayImages: [],
+    displayImages: initiaImages,
   },
   reducers: {
     addImages: (state, action) => {
@@ -21,29 +58,9 @@ export const dataSlice = createSlice({
       cart.push(action.payload)
       return { ...state, cart: [...state.cart, action.payload] }
     },
-    /*
-    productQuantity: (state, action) => {
-      const index = state.products.findIndex((item) => item.id === action.payload.item.id)
-      const updatedArray = update(state, {
-        products: {
-          [index]: {
-            quantity: {$set: action.payload.value}
-          }
-        }
-      })
-      return updatedArray;
-    },
-    cartProductQuantity: (state, action) => {
-      const index = state.products.findIndex((item) => item.id === action.payload.item.id)
-      const updatedArray = update(state, {
-        products: {
-          [index]: {
-            quantity: {$set: state.products[index].quantity + action.payload.num}
-          }
-        }
-      })
-      return updatedArray;
-    }*/
+    setImages: (state, action) => {
+      return { ...state, displayImages: [...state.displayImages, action.payload] }
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(fetchImages.fulfilled, (state, action) => {
@@ -51,5 +68,7 @@ export const dataSlice = createSlice({
     });
   },
 });
+
+export const { setImages } = dataSlice.actions;
 
 export default dataSlice.reducer;
