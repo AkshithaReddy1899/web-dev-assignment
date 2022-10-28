@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
+import { useAlert } from 'react-alert';
 
 const initiaImages = [
   {
@@ -28,6 +29,7 @@ const initiaImages = [
   }
 ]
 
+
 export const fetchImages = createAsyncThunk('GET_IMAGES', async () => {
   let headersList = {
    "Content-Type": "application/json"
@@ -37,7 +39,7 @@ export const fetchImages = createAsyncThunk('GET_IMAGES', async () => {
     method: "GET",
     headers: headersList
   });
-  
+
   let data = await response.json();
   const newData = {};
   newData.id = data.id;
@@ -51,6 +53,12 @@ export const dataSlice = createSlice({
     displayImages: initiaImages,
   },
   reducers: {
+    removeImage: (state, action) => {
+      return {
+        ...state,
+        displayImages: state.displayImages.filter((item) => item.id !== action.payload)
+      }
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(fetchImages.fulfilled, (state, action) => {
@@ -58,5 +66,7 @@ export const dataSlice = createSlice({
     });
   },
 });
+
+export const { removeImage } = dataSlice.actions;
 
 export default dataSlice.reducer;
