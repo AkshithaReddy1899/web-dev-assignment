@@ -34,7 +34,7 @@ export const fetchImages = createAsyncThunk('GET_IMAGES', async () => {
    "Content-Type": "application/json"
   }
    
-  let response = await fetch(`https://api.unsplash.com/photos/random?client_id=${process.env.REACT_APP_ACCESS_KEY}`, { 
+  let response = await fetch(`https://api.unsplash.com/photos/random?client_id=leqi7jJafNX4juxo6NmaftSQIrbQgSAS0yjh_wVJkDs`, { 
     method: "GET",
     headers: headersList
   });
