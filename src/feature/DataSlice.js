@@ -33,32 +33,28 @@ export const fetchImages = createAsyncThunk('GET_IMAGES', async () => {
    "Content-Type": "application/json"
   }
    
-  let response = await fetch(`https://api.unsplash.com/photos?client_id=${process.env.REACT_APP_ACCESS_KEY}`, { 
+  let response = await fetch(`https://api.unsplash.com/photos/random?client_id=${process.env.REACT_APP_ACCESS_KEY}`, { 
     method: "GET",
     headers: headersList
   });
   
   let data = await response.json();
-  console.log(data);
-  return data;
+  const newData = {};
+  newData.id = data.id;
+  newData.url = data.urls.thumb;
+  return newData;
 })
 
 export const dataSlice = createSlice({
   name: 'images',
   initialState: {
-		images: [],
     displayImages: initiaImages,
   },
   reducers: {
-    addImages: (state, action) => {
-      const cart = [];
-      cart.push(action.payload)
-      return { ...state, cart: [...state.cart, action.payload] }
-    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchImages.fulfilled, (state, action) => {
-      state.images = action.payload;
+      return { ...state, displayImages: [...state.displayImages, action.payload] }
     });
   },
 });

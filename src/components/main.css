@@ -11,24 +11,25 @@
   flex-wrap: wrap;
   width:90vw;
   height:80vh;
+	overflow: hidden;
 }
 
-.image:nth-child(6n) {
+.image-container:nth-child(6n) {
   height: 30%;
 }
 
-.image:nth-child(6n-1) {
+.image-container:nth-child(6n-1) {
   height: 50%;
 }
 
-.image:nth-child(6n-2),.image:nth-child(6n-3) {
+.image-container:nth-child(6n-2),.image-container:nth-child(6n-3) {
   height: 40%;
 }
 
-.image:nth-child(6n-4) {
+.image-container:nth-child(6n-4) {
   height: 60%;
 }
 
-.image:nth-child(6n-5) {
+.image-container:nth-child(6n-5) {
   height: 20%;
 }

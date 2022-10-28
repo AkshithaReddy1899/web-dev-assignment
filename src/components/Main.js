@@ -5,9 +5,11 @@ import './main.css';
 
 export const Main = () => {
 	const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchImages())
-  },[dispatch])
+
+	const handleAdd = (e) => {
+		e.preventDefault();
+		dispatch(fetchImages())
+	}
 
 	const data = useSelector((state) => state.dataReducer)
 	console.log(data);
@@ -21,14 +23,20 @@ export const Main = () => {
 						<div className="card-container">
 							{
 							data.displayImages.map((item) => (
-								<img key={item.id} src={item.url} alt="random-img" className="object-cover image m-2" />
+								<div key={item.id} className="image-container m-2 " style={{background: `url(${item.url}) center/cover no-repeat`}}>
+								</div>
 							))
-						}
+						  }
 						</div>):(<p>Something went wrong try again later</p>)
 					}
 				</div>
 			</div>
-			<div className=""></div>
+			<div className="mx-auto text-center">
+				<button
+				  type="button" className="mx-4 bg-indigo-900 w-20 p-1 rounded shadow-lg"
+					onClick={(e) => {handleAdd(e)}}>Add</button>
+				<button type="button" className="mx-4 bg-indigo-900 w-20 p-1 rounded shadow-lg">Remove</button>
+			</div>
 		</div>
 	)
 }
